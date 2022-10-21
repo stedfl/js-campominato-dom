@@ -1,25 +1,29 @@
-// VARIABILI GLOBALI
 btnStart = document.getElementById("start");
-mainWrap = document.querySelector(".main-wrapper");
+gameWrap = document.querySelector(".game-wrapper");
 const bombsNumb = 16;
 const whereBombs = [];
-let scores = 5;
+let score = 0;
 
 btnStart.addEventListener ("click", function() {
   const elemPerRow = document.getElementById("level-game").value;
   reset();
   init(elemPerRow);
+  return 
 })
 
 function init(elNumb) {
   container = document.createElement("div");
   container.className = "container";
-  mainWrap.append(container);
-  const totalBox = Math.pow(elNumb, 2);
+  gameWrap.append(container);
+  const totalBox = getSquaredNumber(elNumb);
   for (i = 0; i < totalBox; i++) {
-    createBox(i, elNumb, container);
+    createBox(i, elNumb);
   }
   bombsGenerator(totalBox);
+}
+
+function getSquaredNumber(numb) {
+  return Math.pow(numb, 2);
 }
 
 function createBox(indexLoop, elNumb) {
@@ -38,23 +42,55 @@ function dimensionCalc(elNumb) {
 }
 
 function bombsGenerator(max) {
-while (!(whereBombs.length === 16)){
+while (!(whereBombs.length === bombsNumb)){
   let randomNumb = Math.ceil(Math.random() * max);
   if (!whereBombs.includes(randomNumb)) {
       whereBombs.push(randomNumb);
     }
   }
-  console.log(whereBombs);
 }
 
-function clickBox(event){
-  console.log("Cella cliccata numero: " + this.idElement); 
-  this.classList.add("change");
+function clickBox(){
+  console.log(document.querySelector(".container"));
+  score++;
+  let result;
+  let end = false;
+  const allCell = document.getElementsByClassName("box");
+  if (!whereBombs.includes(this.idElement)) {
+    this.classList.add("change");
+    if (score === (allCell.length - bombsNumb)) {
+      end = true;
+      result = `
+      Hai vinto con ${score} punti su ${allCell.length}
+      `;
+    }
+  } else {
+    this.classList.add("bomb")
+    score = score - 1;
+    end = true;
+    result = `
+    Hai perso con ${score} punti su ${allCell.length}
+    `;
+  }
+
+  if (end === true) {
+    endGame(result);
+ }
+}
+
+function endGame(result) {
+  const output = document.querySelector(".output");
+  output.innerText = result;
+   // Mostra tutte le bombe
+   // 1 Congela griglia: chiamo funzione per congelare
+   // 2 Scrivo dentro h2 il result risultato.
 }
 
 function reset() {
-  scores = 0;
-  document.querySelector(".welcome").innerText = "";
+  score = 0;
+  document.querySelector(".output").innerText = "";
+  gameWrap.innerText = "";
+  console.log(gameWrap);
 }
 
 /*
@@ -63,7 +99,6 @@ VARIABILI GLOBALI
 1 dichiarazione array bombe vuoto
 2 dichiarazione numero bombe
 3 dichiarazione punteggio che inizialmente è zero
-
 
 WORKFLOW
 1)Pagina iniziale: h2 centrale con scritta "scegli il livello di difficoltà e premi Start"
