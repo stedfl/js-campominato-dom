@@ -51,7 +51,6 @@ while (!(whereBombs.length === bombsNumb)){
 }
 
 function clickBox(){
-  console.log(document.querySelector(".container"));
   score++;
   let result;
   let end = false;
@@ -82,17 +81,22 @@ function endGame(result) {
   const output = document.querySelector(".output");
   output.innerText = result;
   freezeGrid();
-  // showerBomb();
+  showerBomb();
 }
 
-// FUNZIONE PER CONGELARE
-// 1 crea un elemento div
-// 2 all'elemento div dò classe .freeze (nel CSS questa ha position absolute, top 0 left 0, colore grigino trasparente e width ed height 100%)
-// 3 inserisco il div nel main wrapper a cui nel CSS ho dato position absolute
 function freezeGrid() {
   const freezeLayer = document.createElement("div");
   freezeLayer.className = "freeze-layer";
   gameWrap.append(freezeLayer);
+}
+
+function showerBomb() {
+  const allCell = document.getElementsByClassName("box");
+  for (i = 0; i < allCell.length; i++) {
+    if(whereBombs.includes(allCell[i].idElement)) {
+      allCell[i].classList.add("bomb");
+    }
+  }
 }
 
 function reset() {

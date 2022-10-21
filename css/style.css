@@ -75,6 +75,7 @@ main {
 
 .bomb {
   background-color: rgb(170, 17, 17);
+  color: white;
 }
 
 .freeze-layer {
