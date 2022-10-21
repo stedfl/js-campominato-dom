@@ -81,9 +81,18 @@ function clickBox(){
 function endGame(result) {
   const output = document.querySelector(".output");
   output.innerText = result;
-   // Mostra tutte le bombe
-   // 1 Congela griglia: chiamo funzione per congelare
-   // 2 Scrivo dentro h2 il result risultato.
+  freezeGrid();
+  // showerBomb();
+}
+
+// FUNZIONE PER CONGELARE
+// 1 crea un elemento div
+// 2 all'elemento div dò classe .freeze (nel CSS questa ha position absolute, top 0 left 0, colore grigino trasparente e width ed height 100%)
+// 3 inserisco il div nel main wrapper a cui nel CSS ho dato position absolute
+function freezeGrid() {
+  const freezeLayer = document.createElement("div");
+  freezeLayer.className = "freeze-layer";
+  gameWrap.append(freezeLayer);
 }
 
 function reset() {
