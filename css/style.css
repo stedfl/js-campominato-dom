@@ -34,7 +34,7 @@ header {
 
 button {
   margin-left: 1rem;
-  background-color:darkgreen;
+  background-color:rgb(59, 164, 59);
   border: 1px solid black;
 }
 
@@ -69,6 +69,10 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 2rem;
+}
+
+.output {
   font-size: 2rem;
 }
 
