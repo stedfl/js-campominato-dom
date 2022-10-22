@@ -1,8 +1,11 @@
-btnStart = document.getElementById("start");
-gameWrap = document.querySelector(".game-wrapper");
+const btnStart = document.getElementById("start");
+const gameWrap = document.querySelector(".game-wrapper");
+const listHistory = document.querySelector(".storico");
 const bombsNumb = 16;
 let whereBombs = [];
 let score = 0;
+let matches = 0;
+let result = "";
 
 btnStart.addEventListener ("click", function() {
   const elemPerRow = document.getElementById("level-game").value;
@@ -51,33 +54,33 @@ function bombsGenerator(max) {
 
 function clickBox() {
   score++;
-  let result;
   let end = false;
   const allCell = document.getElementsByClassName("box");
   if (!whereBombs.includes(this.idElement)) {
     this.classList.add("change");
     if (score === (allCell.length - bombsNumb)) {
       end = true;
-      result = `
-      Hai vinto totalizzando ${score} punti su ${allCell.length - bombsNumb}
-      `;
+      result = "vinto";
     }
   } else {
     this.classList.add("bomb")
     score = score - 1;
     end = true;
-    result = `
-    Hai perso totalizzando ${score} punti su ${allCell.length - bombsNumb}
-    `;
+    result = "perso";  
   }
+
   if (end) {
-    endGame(result);
+    let output = `
+    Hai ${result} totalizzando ${score} punti su ${allCell.length - bombsNumb}
+    `; 
+    endGame(output);
   }
 }
 
-function endGame(result) {
-  const output = document.querySelector(".output");
-  output.innerText = result;
+function endGame(output) {
+  matches++;
+  const outputMsg = document.querySelector(".output");
+  outputMsg.innerText = output;
   freezeGrid();
   showBombs();
 }
@@ -98,6 +101,14 @@ function showBombs() {
 }
 
 function reset() {
+  if (matches > 0) {
+    li = document.createElement("li");
+    li.matches = matches;
+    li.innerText = `Risultato ${matches}° partita: Hai ${result} con ${score} punti`;
+    if (li.matches !== listHistory.lastChild.matches) {
+      listHistory.append(li);
+    }
+  }
   score = 0;
   whereBombs = [];
   document.querySelector(".output").innerText = "";
