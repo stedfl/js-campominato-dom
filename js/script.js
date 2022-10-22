@@ -1,4 +1,5 @@
 const btnStart = document.getElementById("start");
+const btnReset = document.getElementById("reset");
 const gameWrap = document.querySelector(".game-wrapper");
 const listHistory = document.querySelector(".storico");
 const bombsNumb = 16;
@@ -102,9 +103,10 @@ function showBombs() {
 
 function reset() {
   if (matches > 0) {
+    listHistory.classList.add("d-block");
     li = document.createElement("li");
     li.matches = matches;
-    li.innerText = `Risultato ${matches}° partita: Hai ${result} con ${score} punti`;
+    li.innerText = `${matches}° partita: Hai ${result} con ${score} punti`;
     if (li.matches !== listHistory.lastChild.matches) {
       listHistory.append(li);
     }
