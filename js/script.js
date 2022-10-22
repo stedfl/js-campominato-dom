@@ -1,7 +1,7 @@
 btnStart = document.getElementById("start");
 gameWrap = document.querySelector(".game-wrapper");
 const bombsNumb = 16;
-const whereBombs = [];
+let whereBombs = [];
 let score = 0;
 
 btnStart.addEventListener ("click", function() {
@@ -100,6 +100,7 @@ function showerBomb() {
 
 function reset() {
   score = 0;
+  whereBombs = [];
   document.querySelector(".output").innerText = "";
   gameWrap.innerText = "";
 }
