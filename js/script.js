@@ -8,7 +8,6 @@ btnStart.addEventListener ("click", function() {
   const elemPerRow = document.getElementById("level-game").value;
   reset();
   init(elemPerRow);
-  return 
 })
 
 function init(elNumb) {
@@ -42,15 +41,15 @@ function dimensionCalc(elNumb) {
 }
 
 function bombsGenerator(max) {
-while (!(whereBombs.length === bombsNumb)){
-  let randomNumb = Math.ceil(Math.random() * max);
-  if (!whereBombs.includes(randomNumb)) {
+  while (!(whereBombs.length === bombsNumb)) {
+    let randomNumb = Math.ceil(Math.random() * max);
+    if (!whereBombs.includes(randomNumb)) {
       whereBombs.push(randomNumb);
     }
   }
 }
 
-function clickBox(){
+function clickBox() {
   score++;
   let result;
   let end = false;
@@ -71,16 +70,16 @@ function clickBox(){
     Hai perso totalizzando ${score} punti su ${allCell.length - bombsNumb}
     `;
   }
-  if (end === true) {
+  if (end) {
     endGame(result);
- }
+  }
 }
 
 function endGame(result) {
   const output = document.querySelector(".output");
   output.innerText = result;
   freezeGrid();
-  showerBomb();
+  showBombs();
 }
 
 function freezeGrid() {
@@ -89,7 +88,7 @@ function freezeGrid() {
   gameWrap.append(freezeLayer);
 }
 
-function showerBomb() {
+function showBombs() {
   const allCell = document.getElementsByClassName("box");
   for (i = 0; i < allCell.length; i++) {
     if(whereBombs.includes(allCell[i].idElement)) {
