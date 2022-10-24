@@ -76,6 +76,7 @@ function clickBox() {
     `; 
     endGame(output);
   }
+  this.removeEventListener("click", clickBox);
 }
 
 function endGame(output) {
